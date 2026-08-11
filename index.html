@@ -52,13 +52,8 @@
     transition:background-color .4s var(--ease-expo), box-shadow .4s var(--ease-expo);
   }
   .l-header.-scrolled{ background-color:rgba(243,233,207,.94); backdrop-filter:blur(6px); box-shadow:0 1px 0 var(--line); }
-  .site-title{
-    font-family:"Kaisei Opti",serif;
-    font-weight:700;
-    font-size:clamp(2.1rem,2.4vw,2.7rem);
-    letter-spacing:.03em;
-    color:var(--ink);
-  }
+  .site-title{ display:block; line-height:0; }
+  .site-title img{ height:clamp(38px,4.6vw,54px); width:auto; display:block; }
   .l-header__nav{ display:flex; align-items:center; gap:36px; }
   @media (max-width:900px){ .l-header__nav{ display:none; } }
   .l-header__navLink{
@@ -313,7 +308,7 @@
 
   <!-- ===================== HEADER ===================== -->
   <header class="l-header" id="header">
-    <a href="#top" class="site-title">にっぽん津々浦々</a>
+    <a href="#top" class="site-title"><img src="images/logo.png" alt="にっぽん津々浦々"></a>
     <nav class="l-header__nav">
       <a class="l-header__navLink" href="#feature" data-text="気になる特集"><span>気になる特集</span></a>
       <a class="l-header__navLink" href="#recipe" data-text="津々浦々レシピ"><span>津々浦々レシピ</span></a>
