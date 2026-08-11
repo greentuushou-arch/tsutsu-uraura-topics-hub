@@ -157,14 +157,6 @@
     width:min(40vw,420px); aspect-ratio:1/1;
     transition:transform .85s var(--ease-expo), opacity .85s var(--ease-expo), filter .85s var(--ease-expo);
   }
-  .fv__slide__ring{
-    position:absolute; inset:-16px; border-radius:50%;
-    border:2.5px solid var(--ink);
-    transform:translate(10px,-10px);
-    opacity:0; transition:opacity .6s var(--ease-expo) .3s;
-    pointer-events:none;
-  }
-  .fv__slide[data-pos="0"] .fv__slide__ring{ opacity:1; }
   .fv__slide__photo{ position:relative; width:100%;height:100%; border-radius:50%; overflow:hidden; background:var(--paper-deep); box-shadow:0 18px 40px rgba(44,38,32,.16); }
   .fv__slide__photo img{ width:100%;height:100%;object-fit:cover; }
   .fv__slide a{ display:block; width:100%; height:100%; }
@@ -258,7 +250,8 @@
 
   .card__body{ flex:1; min-width:0; padding:22px 24px 26px; display:flex; flex-direction:column; }
 
-  .card__imgWrap{ overflow:hidden; aspect-ratio:16/9; background:var(--paper-deep); }
+  .card__imgWrap{ overflow:hidden; aspect-ratio:16/9; background:var(--paper-deep); border-radius:10px; transition:border-radius .55s var(--ease-expo); }
+  .card__link:hover .card__imgWrap{ border-radius:64px; }
   .card__imgWrap img{ width:100%;height:100%;object-fit:cover; transition:transform .8s var(--ease-expo); }
   .card__link:hover .card__imgWrap img{ transform:scale(1.06); }
 
@@ -493,7 +486,7 @@ const fvStage = document.getElementById('fvStage');
 HERO.forEach(s => {
   const el = document.createElement('div');
   el.className = 'fv__slide';
-  el.innerHTML = `<div class="fv__slide__ring"></div><a href="${s.href}" target="_blank" rel="noopener"><div class="fv__slide__photo"><img src="${s.thumb}" alt="${s.title}" loading="lazy"></div></a>`;
+  el.innerHTML = `<a href="${s.href}" target="_blank" rel="noopener"><div class="fv__slide__photo"><img src="${s.thumb}" alt="${s.title}" loading="lazy"></div></a>`;
   fvTrack.appendChild(el);
 });
 const fvSlideEls = Array.from(fvTrack.children);
