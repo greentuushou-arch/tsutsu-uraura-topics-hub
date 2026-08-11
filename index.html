@@ -115,11 +115,12 @@
   .nav-drawer__item:last-child{ border-bottom:1px solid rgba(251,245,230,.16); }
   .nav-drawer__link{
     display:block; padding:20px 4px; font-size:1.9rem; font-weight:500;
-    height:1.3em; overflow:hidden; position:relative;
+    position:relative;
   }
-  .nav-drawer__link span{ display:block; transition:transform .55s var(--ease-expo); }
-  .nav-drawer__link span::after{ content:attr(data-text); position:absolute; top:100%; left:4px; }
-  .nav-drawer__link:hover span{ transform:translateY(-1.3em); }
+  .nav-drawer__link__mask{ display:block; height:1.3em; overflow:hidden; position:relative; }
+  .nav-drawer__link__mask span{ display:block; transition:transform .55s var(--ease-expo); }
+  .nav-drawer__link__mask span::after{ content:attr(data-text); position:absolute; top:100%; left:0; }
+  .nav-drawer__link:hover .nav-drawer__link__mask span{ transform:translateY(-1.3em); }
   .nav-drawer__sns{ font-size:1.3rem; letter-spacing:.1em; opacity:.6; }
 
   /* ============ HERO / FV ============ */
@@ -134,7 +135,7 @@
   .fv__stage{
     position:relative; width:100%;
     display:flex; align-items:center; justify-content:center;
-    height:min(58vw,480px); min-height:300px;
+    height:min(34vw,280px); min-height:200px;
     opacity:0; transform:scale(.96);
     transition:opacity 1s var(--ease-expo), transform 1s var(--ease-expo);
   }
@@ -154,16 +155,18 @@
   .fv__track{ position:relative; width:100%; height:100%; }
   .fv__slide{
     position:absolute; top:50%; left:50%;
-    width:min(40vw,420px); aspect-ratio:1/1;
+    width:min(24vw,220px); aspect-ratio:1/1;
     transition:transform .85s var(--ease-expo), opacity .85s var(--ease-expo), filter .85s var(--ease-expo);
   }
-  .fv__slide__photo{ position:relative; width:100%;height:100%; border-radius:50%; overflow:hidden; background:var(--paper-deep); box-shadow:0 18px 40px rgba(44,38,32,.16); }
+  .fv__slide__photo{ position:relative; width:100%;height:100%; border-radius:50%; overflow:hidden; background:var(--paper-deep); box-shadow:0 12px 28px rgba(44,38,32,.14); }
   .fv__slide__photo img{ width:100%;height:100%;object-fit:cover; }
   .fv__slide a{ display:block; width:100%; height:100%; }
-  .fv__slide[data-pos="0"]{ transform:translate(-50%,-50%) scale(1); opacity:1; z-index:5; filter:none; }
-  .fv__slide[data-pos="-1"]{ transform:translate(calc(-50% - 34vw),-50%) scale(.58); opacity:.65; z-index:3; filter:saturate(.75); }
-  .fv__slide[data-pos="1"]{  transform:translate(calc(-50% + 34vw),-50%) scale(.58); opacity:.65; z-index:3; filter:saturate(.75); }
-  .fv__slide[data-pos="far"]{ transform:translate(-50%,-50%) scale(.5); opacity:0; z-index:1; pointer-events:none; }
+  .fv__slide[data-pos="0"]{ transform:translate(-50%,-50%) scale(1); opacity:1; z-index:6; filter:none; }
+  .fv__slide[data-pos="-1"]{ transform:translate(calc(-50% - 19vw),-50%) scale(.74); opacity:.75; z-index:5; filter:saturate(.8); }
+  .fv__slide[data-pos="1"]{  transform:translate(calc(-50% + 19vw),-50%) scale(.74); opacity:.75; z-index:5; filter:saturate(.8); }
+  .fv__slide[data-pos="-2"]{ transform:translate(calc(-50% - 34vw),-50%) scale(.52); opacity:.45; z-index:4; filter:saturate(.65); }
+  .fv__slide[data-pos="2"]{  transform:translate(calc(-50% + 34vw),-50%) scale(.52); opacity:.45; z-index:4; filter:saturate(.65); }
+  .fv__slide[data-pos="far"]{ transform:translate(-50%,-50%) scale(.4); opacity:0; z-index:1; pointer-events:none; }
 
   .fv__nav{
     position:absolute; top:50%; transform:translateY(-50%);
@@ -342,10 +345,10 @@
     <div>
       <button class="nav-drawer__close" id="navClose">×</button>
       <ul class="nav-drawer__list">
-        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#top" data-text="トップ"><span>トップ</span></a></li>
-        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#feature" data-text="気になる特集"><span>気になる特集</span></a></li>
-        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#recipe" data-text="津々浦々レシピ"><span>津々浦々レシピ</span></a></li>
-        <li class="nav-drawer__item"><a class="nav-drawer__link" href="https://www.rakuten.co.jp/tsutsu-uraura/" data-text="ショップトップへ"><span>ショップトップへ</span></a></li>
+        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#top" data-text="トップ"><span class="nav-drawer__link__mask"><span>トップ</span></span></a></li>
+        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#feature" data-text="気になる特集"><span class="nav-drawer__link__mask"><span>気になる特集</span></span></a></li>
+        <li class="nav-drawer__item"><a class="nav-drawer__link" href="#recipe" data-text="津々浦々レシピ"><span class="nav-drawer__link__mask"><span>津々浦々レシピ</span></span></a></li>
+        <li class="nav-drawer__item"><a class="nav-drawer__link" href="https://www.rakuten.co.jp/tsutsu-uraura/" data-text="ショップトップへ"><span class="nav-drawer__link__mask"><span>ショップトップへ</span></span></a></li>
       </ul>
     </div>
     <div class="nav-drawer__sns">にっぽん津々浦々 楽天市場店</div>
@@ -459,7 +462,7 @@ const ALL = DATA.map((d, i) => ({
 
 const FEATURES = ALL.filter(x => x.category === 'feature');
 const RECIPES = ALL.filter(x => x.category === 'recipe');
-const HERO = ALL.slice(0, 5);
+const HERO = ALL.slice(0, 9);
 
 /* ============ HEADER SCROLL ============ */
 const header = document.getElementById('header');
@@ -495,8 +498,9 @@ let fvIndex = 0, fvTimer = null;
 function renderFV(){
   const n = HERO.length;
   fvSlideEls.forEach((el, i) => {
-    const diff = (i - fvIndex + n) % n;
-    el.dataset.pos = diff === 0 ? '0' : diff === 1 ? '1' : diff === n - 1 ? '-1' : 'far';
+    let diff = (i - fvIndex + n) % n;
+    if (diff > n / 2) diff -= n;
+    el.dataset.pos = (diff >= -2 && diff <= 2) ? String(diff) : 'far';
   });
   const s = HERO[fvIndex];
   fvNumVal.textContent = String(fvIndex + 1).padStart(2,'0');
