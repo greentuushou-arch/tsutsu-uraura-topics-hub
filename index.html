@@ -212,7 +212,17 @@
     flex:none; border:none; background:var(--paper-deep); width:26px;height:26px;border-radius:50%;
     display:flex;align-items:center;justify-content:center; cursor:pointer; color:var(--ink); font-size:1.3rem; line-height:1;
   }
-  .search__status{ text-align:center; margin-top:14px; font-size:1.3rem; color:var(--ink-soft); min-height:1.6em; }
+  .search__status{
+    text-align:center; margin:14px auto 0; max-width:640px;
+    font-size:1.3rem; color:var(--ink-soft); min-height:1.6em;
+    transition:color .3s var(--ease-expo), background-color .3s var(--ease-expo);
+  }
+  .search__status.-active{
+    font-weight:700; color:var(--ink);
+    background:var(--pink); border-radius:20px; padding:9px 20px; display:inline-block;
+  }
+  .search__status.-flash{ animation:statusFlash .5s var(--ease-expo); }
+  @keyframes statusFlash{ 0%{transform:scale(.94);} 55%{transform:scale(1.03);} 100%{transform:scale(1);} }
 
   /* ============ SECTION BLOCKS ============ */
   .block{ padding:70px clamp(20px,5vw,64px) 30px; }
@@ -663,6 +673,7 @@ const searchStatus = document.getElementById('searchStatus');
 function runSearch(raw){
   const q = raw.trim();
   searchClear.hidden = !q;
+  searchStatus.classList.toggle('-active', !!q);
   if (!q){
     featureSection.render(FEATURES);
     recipeSection.render(RECIPES);
@@ -678,12 +689,25 @@ function runSearch(raw){
   searchStatus.textContent = total > 0
     ? `「${q}」の検索結果：${total}件（特集${matchFeature.length}・レシピ${matchRecipe.length}）`
     : `「${q}」に一致する記事が見つかりませんでした`;
+  searchStatus.classList.remove('-flash');
+  void searchStatus.offsetWidth;
+  searchStatus.classList.add('-flash');
 }
 
 let searchTimer;
 searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => runSearch(searchInput.value), 200);
+});
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
+  e.preventDefault();
+  clearTimeout(searchTimer);
+  runSearch(searchInput.value);
+  searchInput.blur(); // スマホのソフトキーボードを閉じる
+  requestAnimationFrame(() => {
+    searchStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 });
 searchClear.addEventListener('click', () => {
   searchInput.value = '';
