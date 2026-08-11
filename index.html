@@ -126,78 +126,62 @@
   /* ============ HERO / FV ============ */
   .fv{
     position:relative;
-    padding:150px clamp(20px,5vw,60px) 90px;
-    display:flex; flex-direction:column; align-items:center;
-    overflow:hidden;
+    padding:88px 0 0;
     background:var(--paper);
   }
-  .fv__eyebrow{ font-size:1.3rem; font-weight:700; letter-spacing:.24em; color:var(--ink-soft); margin-bottom:10px; }
-  .fv__stage{
-    position:relative; width:100%;
-    display:flex; align-items:center; justify-content:center;
-    height:min(34vw,280px); min-height:200px;
-    opacity:0; transform:scale(.96);
-    transition:opacity 1s var(--ease-expo), transform 1s var(--ease-expo);
+  .fv__illustration{
+    position:relative;
+    width:100%; max-width:1680px; margin:0 auto;
+    aspect-ratio:2366/874;
+    overflow:hidden;
+    opacity:0; transform:scale(.98);
+    transition:opacity 1.1s var(--ease-expo), transform 1.1s var(--ease-expo);
   }
-  .fv.-loaded .fv__stage{ opacity:1; transform:scale(1); }
+  .fv.-loaded .fv__illustration{ opacity:1; transform:scale(1); }
+  .fv__illustration > img{ width:100%; height:100%; object-fit:cover; object-position:left center; display:block; }
 
-  .fv__num{
-    position:absolute; top:-6px; left:50%; transform:translateX(-50%);
-    z-index:6; font-family:"Zen Kaku Gothic New",sans-serif; font-weight:700;
-    font-size:1.5rem; letter-spacing:.08em; color:var(--ink);
-    display:flex; align-items:center; gap:.5em;
-    clip-path:inset(0 100% 0 0);
-    transition:clip-path .9s var(--ease-expo);
+  .fv__pickupWrap{
+    position:absolute; top:53%; right:6%; transform:translateY(-50%);
+    width:clamp(96px,15%,210px);
+    display:flex; flex-direction:column; align-items:center; gap:.6em;
   }
-  .fv__num.-in{ clip-path:inset(0 0% 0 0); }
-  .fv__num b{ font-size:1.9rem; color:var(--pink-deep); }
+  .fv__pickupPhoto{
+    position:relative; width:100%; aspect-ratio:1/1; border-radius:50%;
+    overflow:hidden; background:var(--paper-deep);
+    box-shadow:0 10px 24px rgba(44,38,32,.16);
+  }
+  .fv__pickupItem{ position:absolute; inset:0; opacity:0; transition:opacity .9s var(--ease-expo); }
+  .fv__pickupItem.-active{ opacity:1; }
+  .fv__pickupItem img{ width:100%;height:100%;object-fit:cover; }
+  .fv__pickupItem a{ display:block; width:100%; height:100%; }
 
-  .fv__track{ position:relative; width:100%; height:100%; }
-  .fv__slide{
-    position:absolute; top:50%; left:50%;
-    width:min(24vw,220px); aspect-ratio:1/1;
-    transition:transform .85s var(--ease-expo), opacity .85s var(--ease-expo), filter .85s var(--ease-expo);
+  .fv__pickupLabel{
+    font-size:clamp(1.05rem,1.1vw,1.3rem); font-weight:700; letter-spacing:.04em; color:var(--ink);
+    display:flex; align-items:center; gap:.4em;
   }
-  .fv__slide__photo{ position:relative; width:100%;height:100%; border-radius:50%; overflow:hidden; background:var(--paper-deep); box-shadow:0 12px 28px rgba(44,38,32,.14); }
-  .fv__slide__photo img{ width:100%;height:100%;object-fit:cover; }
-  .fv__slide a{ display:block; width:100%; height:100%; }
-  .fv__slide[data-pos="0"]{ transform:translate(-50%,-50%) scale(1); opacity:1; z-index:6; filter:none; }
-  .fv__slide[data-pos="-1"]{ transform:translate(calc(-50% - 19vw),-50%) scale(.74); opacity:.75; z-index:5; filter:saturate(.8); }
-  .fv__slide[data-pos="1"]{  transform:translate(calc(-50% + 19vw),-50%) scale(.74); opacity:.75; z-index:5; filter:saturate(.8); }
-  .fv__slide[data-pos="-2"]{ transform:translate(calc(-50% - 34vw),-50%) scale(.52); opacity:.45; z-index:4; filter:saturate(.65); }
-  .fv__slide[data-pos="2"]{  transform:translate(calc(-50% + 34vw),-50%) scale(.52); opacity:.45; z-index:4; filter:saturate(.65); }
-  .fv__slide[data-pos="far"]{ transform:translate(-50%,-50%) scale(.4); opacity:0; z-index:1; pointer-events:none; }
+  .fv__pickupLabel b{ color:var(--pink-deep); }
 
-  .fv__nav{
-    position:absolute; top:50%; transform:translateY(-50%);
-    width:50px;height:50px;border-radius:50%;
-    border:1.5px solid var(--ink);
-    display:flex;align-items:center;justify-content:center;
-    background:var(--paper-card); cursor:pointer; z-index:6;
-    transition:background-color .4s var(--ease-expo);
+  .fv__pickupControls{ display:flex; align-items:center; gap:10px; }
+  .fv__navSm{
+    width:24px;height:24px;border-radius:50%; border:1.3px solid var(--ink);
+    background:var(--paper-card); display:flex;align-items:center;justify-content:center;
+    cursor:pointer; transition:background-color .3s var(--ease-expo);
   }
-  .fv__nav:hover{ background-color:var(--pink); }
-  .fv__nav svg{ width:16px;height:16px; stroke:var(--ink); }
-  .fv__nav--prev{ left:clamp(0px,2vw,30px); }
-  .fv__nav--next{ right:clamp(0px,2vw,30px); }
-
-  .fv__progress{ display:none; }
-  @media (max-width:767px){
-    .fv__progress{
-      display:block; width:min(70%,280px); height:2px; margin:20px auto 0;
-      background:var(--line); border-radius:2px; overflow:hidden;
-    }
-    .fv__progress i{ display:block; height:100%; width:0%; background:var(--pink-deep); }
-    .fv__progress.-run i{ animation:barFill 4.5s linear forwards; }
-    @keyframes barFill{ from{width:0%;} to{width:100%;} }
-  }
+  .fv__navSm:hover{ background-color:var(--pink); }
+  .fv__navSm svg{ width:9px;height:9px; stroke:var(--ink); }
 
   .fv__caption{
-    text-align:center; margin-top:22px;
+    text-align:center; margin-top:20px;
     font-size:1.4rem; letter-spacing:.03em; color:var(--ink-soft);
-    padding:0 20px;
+    padding:0 20px 4px;
   }
   .fv__caption b{ color:var(--ink); font-weight:700; }
+
+  @media (max-width:640px){
+    .fv__pickupWrap{ right:4%; width:clamp(72px,17%,140px); gap:.4em; }
+    .fv__pickupLabel{ font-size:1rem; }
+    .fv__pickupControls{ display:none; }
+  }
 
   /* ============ SECTION BLOCKS ============ */
   .block{ padding:70px clamp(20px,5vw,64px) 30px; }
@@ -299,7 +283,7 @@
   @media (max-width:800px){ .about__row{ grid-template-columns:1fr; } }
   .about__text{ font-size:1.55rem; line-height:2.1; color:var(--ink-soft); }
   .about__text + .about__text{ margin-top:1.6em; }
-  .about__photo{ aspect-ratio:4/3; border-radius:6px; overflow:hidden; }
+  .about__photo{ aspect-ratio:1183/874; border-radius:6px; overflow:hidden; background:var(--paper-deep); }
   .about__photo img{ width:100%;height:100%;object-fit:cover; }
   .about__cta{ margin-top:44px; display:inline-flex; align-items:center; gap:16px; font-size:1.4rem; font-weight:700; }
   .arrow-btn{
@@ -356,18 +340,21 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="fv" id="top">
-    <p class="fv__eyebrow en">TSUTSU-URAURA JOURNAL</p>
-    <div class="fv__stage" id="fvStage">
-      <div class="fv__num" id="fvNum"><span>Pickup</span><b id="fvNumVal">01</b></div>
-      <div class="fv__track" id="fvTrack"></div>
-      <button class="fv__nav fv__nav--prev" id="fvPrev" aria-label="前へ">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
-      </button>
-      <button class="fv__nav fv__nav--next" id="fvNext" aria-label="次へ">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
-      </button>
+    <div class="fv__illustration" id="fvStage">
+      <img src="images/fv-illustration.jpg" alt="にっぽん津々浦々">
+      <div class="fv__pickupWrap">
+        <div class="fv__pickupPhoto" id="fvPickupPhoto"></div>
+        <div class="fv__pickupLabel"><b>Pickup</b><span id="fvNumVal">01</span></div>
+        <div class="fv__pickupControls">
+          <button class="fv__navSm" id="fvPrev" aria-label="前へ">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="fv__navSm" id="fvNext" aria-label="次へ">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="fv__progress" id="fvProgress"><i></i></div>
     <p class="fv__caption" id="fvCaption"></p>
   </section>
 
@@ -414,7 +401,7 @@
             <span class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
         </div>
-        <div class="about__photo fade-up" id="aboutPhoto"></div>
+        <div class="about__photo fade-up"><img src="images/about-illustration.jpg" alt="にっぽん津々浦々"></div>
       </div>
     </div>
   </section>
@@ -478,43 +465,31 @@ navClose.addEventListener('click', () => toggleNav(false));
 navBackdrop.addEventListener('click', () => toggleNav(false));
 document.querySelectorAll('.nav-drawer__link').forEach(l => l.addEventListener('click', () => toggleNav(false)));
 
-/* ============ HERO CAROUSEL ============ */
-const fvTrack = document.getElementById('fvTrack');
-const fvNum = document.getElementById('fvNum');
+/* ============ HERO PICKUP (single-item crossfade) ============ */
+const fvPickupPhoto = document.getElementById('fvPickupPhoto');
 const fvNumVal = document.getElementById('fvNumVal');
 const fvCaption = document.getElementById('fvCaption');
-const fvProgress = document.getElementById('fvProgress');
 const fvStage = document.getElementById('fvStage');
 
 HERO.forEach(s => {
   const el = document.createElement('div');
-  el.className = 'fv__slide';
-  el.innerHTML = `<a href="${s.href}" target="_blank" rel="noopener"><div class="fv__slide__photo"><img src="${s.thumb}" alt="${s.title}" loading="lazy"></div></a>`;
-  fvTrack.appendChild(el);
+  el.className = 'fv__pickupItem';
+  el.innerHTML = `<a href="${s.href}" target="_blank" rel="noopener"><img src="${s.thumb}" alt="${s.title}" loading="lazy"></a>`;
+  fvPickupPhoto.appendChild(el);
 });
-const fvSlideEls = Array.from(fvTrack.children);
+const fvItemEls = Array.from(fvPickupPhoto.children);
 let fvIndex = 0, fvTimer = null;
 
 function renderFV(){
-  const n = HERO.length;
-  fvSlideEls.forEach((el, i) => {
-    let diff = (i - fvIndex + n) % n;
-    if (diff > n / 2) diff -= n;
-    el.dataset.pos = (diff >= -2 && diff <= 2) ? String(diff) : 'far';
-  });
+  fvItemEls.forEach((el, i) => el.classList.toggle('-active', i === fvIndex));
   const s = HERO[fvIndex];
   fvNumVal.textContent = String(fvIndex + 1).padStart(2,'0');
   const tagLabel = s.category === 'recipe' ? 'RECIPE' : 'FEATURE';
   fvCaption.innerHTML = `<b>${tagLabel}</b> ── ${s.title}`;
-
-  fvNum.classList.remove('-in'); void fvNum.offsetWidth;
-  requestAnimationFrame(() => fvNum.classList.add('-in'));
-  fvProgress.classList.remove('-run'); void fvProgress.offsetWidth;
-  requestAnimationFrame(() => fvProgress.classList.add('-run'));
 }
 function nextFV(){ fvIndex = (fvIndex + 1) % HERO.length; renderFV(); }
 function prevFV(){ fvIndex = (fvIndex - 1 + HERO.length) % HERO.length; renderFV(); }
-function startAutoplay(){ clearInterval(fvTimer); fvTimer = setInterval(nextFV, 4500); }
+function startAutoplay(){ clearInterval(fvTimer); fvTimer = setInterval(nextFV, 3800); }
 
 document.getElementById('fvNext').addEventListener('click', () => { nextFV(); startAutoplay(); });
 document.getElementById('fvPrev').addEventListener('click', () => { prevFV(); startAutoplay(); });
@@ -582,8 +557,6 @@ setupSection(RECIPES, 'recipeGrid', 'recipeMore', 'recipeCount', 12);
 document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 
 /* about photo: 特集の1枚をピックアップして使用 */
-const aboutSample = FEATURES[3] || ALL[0];
-document.getElementById('aboutPhoto').innerHTML = `<img src="${aboutSample.thumb}" alt="${aboutSample.title}" loading="lazy">`;
 </script>
 </body>
 </html>
