@@ -44,7 +44,7 @@
   /* ============ HEADER ============ */
   .l-header{
     position:fixed; top:0; left:0; width:100%;
-    height:84px;
+    height:96px;
     display:flex; align-items:center; justify-content:space-between;
     padding:0 clamp(20px,4vw,56px);
     z-index:100;
@@ -53,7 +53,7 @@
   }
   .l-header.-scrolled{ background-color:rgba(243,233,207,.94); backdrop-filter:blur(6px); box-shadow:0 1px 0 var(--line); }
   .site-title{ display:block; line-height:0; }
-  .site-title img{ height:clamp(38px,4.6vw,54px); width:auto; display:block; }
+  .site-title img{ height:clamp(48px,6vw,72px); width:auto; display:block; }
   .l-header__nav{ display:flex; align-items:center; gap:36px; }
   @media (max-width:900px){ .l-header__nav{ display:none; } }
   .l-header__navLink{
@@ -121,7 +121,7 @@
   /* ============ HERO / FV ============ */
   .fv{
     position:relative;
-    padding:88px 0 0;
+    padding:100px 0 0;
     background:var(--paper);
   }
   .fv__illustration{
@@ -136,14 +136,14 @@
   .fv__illustration > img{ width:100%; height:100%; object-fit:cover; object-position:left center; display:block; }
 
   .fv__pickupWrap{
-    position:absolute; top:53%; right:6%; transform:translateY(-50%);
-    width:clamp(96px,15%,210px);
-    display:flex; flex-direction:column; align-items:center; gap:.6em;
+    position:absolute; top:50%; left:70%; transform:translate(-50%,-50%);
+    width:34%; max-width:440px; min-width:150px;
+    display:flex; flex-direction:column; align-items:center; gap:.7em;
   }
   .fv__pickupPhoto{
-    position:relative; width:100%; aspect-ratio:1/1; border-radius:50%;
+    position:relative; width:100%; aspect-ratio:16/9; border-radius:5%;
     overflow:hidden; background:var(--paper-deep);
-    box-shadow:0 10px 24px rgba(44,38,32,.16);
+    box-shadow:0 16px 32px rgba(44,38,32,.2);
   }
   .fv__pickupItem{ position:absolute; inset:0; opacity:0; transition:opacity .9s var(--ease-expo); }
   .fv__pickupItem.-active{ opacity:1; }
@@ -173,7 +173,7 @@
   .fv__caption b{ color:var(--ink); font-weight:700; }
 
   @media (max-width:640px){
-    .fv__pickupWrap{ right:4%; width:clamp(72px,17%,140px); gap:.4em; }
+    .fv__pickupWrap{ left:71%; width:42%; min-width:120px; gap:.4em; }
     .fv__pickupLabel{ font-size:1rem; }
     .fv__pickupControls{ display:none; }
   }
@@ -308,7 +308,7 @@
 
   <!-- ===================== HEADER ===================== -->
   <header class="l-header" id="header">
-    <a href="#top" class="site-title"><img src="images/logo.png" alt="にっぽん津々浦々"></a>
+    <a href="#top" class="site-title"><img src="images/logo_dai.png" alt="にっぽん津々浦々"></a>
     <nav class="l-header__nav">
       <a class="l-header__navLink" href="#feature" data-text="気になる特集"><span>気になる特集</span></a>
       <a class="l-header__navLink" href="#recipe" data-text="津々浦々レシピ"><span>津々浦々レシピ</span></a>
