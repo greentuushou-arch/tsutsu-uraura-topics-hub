@@ -684,6 +684,16 @@ searchClear.addEventListener('click', () => {
   searchInput.focus();
 });
 
+/* トップに戻るリンク（ロゴ／ドロワー／フッター）は検索状態もリセット */
+document.querySelectorAll('a[href="#top"]').forEach(a => {
+  a.addEventListener('click', () => {
+    if (searchInput.value){
+      searchInput.value = '';
+      runSearch('');
+    }
+  });
+});
+
 /* about photo: 特集の1枚をピックアップして使用 */
 </script>
 </body>
